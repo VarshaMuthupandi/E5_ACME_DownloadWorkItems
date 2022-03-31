@@ -1,0 +1,4 @@
+Error Code,Error Message
+1001,Incorrect UserName & Password while Login
+1002,The Site Can't be reached. Please give a Valid URL
+1003,There is no Asset Found.

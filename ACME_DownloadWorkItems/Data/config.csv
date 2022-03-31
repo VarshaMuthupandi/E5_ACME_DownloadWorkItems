@@ -1,0 +1,4 @@
+Name,Value,Description
+acmeURL,https://acme-test.uipaths.com/,URL of the ACME Page
+receiverEmail,mvarshachella@gmail.com,Recipient email address
+workItemEffectiveFromDate,2021-06-01,
