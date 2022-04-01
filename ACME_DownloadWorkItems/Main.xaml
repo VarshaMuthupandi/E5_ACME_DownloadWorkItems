@@ -1,6 +1,6 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1157,1018" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1144,1361" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="37">
+    <scg:List x:TypeArguments="x:String" Capacity="74">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -38,10 +38,16 @@
       <x:String>UiPath.Shared.Activities</x:String>
       <x:String>UiPath.Mail.Activities.Business.HtmlEditor</x:String>
       <x:String>UiPath.Mail.Activities.Business</x:String>
+      <x:String>Newtonsoft.Json.Linq</x:String>
+      <x:String>Newtonsoft.Json</x:String>
+      <x:String>System.Dynamic</x:String>
+      <x:String>System.Collections.Specialized</x:String>
+      <x:String>Element5_Core.Utils.Config</x:String>
+      <x:String>YamlDotNet.Serialization</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="28">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="56">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -69,10 +75,12 @@
       <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
       <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
       <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>Element5.Core</AssemblyReference>
+      <AssemblyReference>YamlDotNet</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="MAIN" sap:VirtualizedContainerService.HintSize="877,953" sap2010:WorkflowViewState.IdRef="Sequence_6">
+  <Sequence DisplayName="MAIN" sap:VirtualizedContainerService.HintSize="498,1296" sap2010:WorkflowViewState.IdRef="Sequence_6">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="dt_extractedData" />
       <Variable x:TypeArguments="sd:DataTable" Name="dt_finalReportData" />
@@ -95,7 +103,7 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="835,861" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="456,1204" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -103,7 +111,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <TryCatch.Try>
-        <Sequence sap2010:Annotation.AnnotationText="Main Consists of : &#xD;&#xA;&#xD;&#xA;1.InitializationMain - Initializes all pre required components.&#xD;&#xA;2.ExtraDataFromWorkItem - Fetches all the data to be               processed with.&#xD;&#xA;3.FilterExtratedDataTable - Filters only the required data.&#xD;&#xA;4. ProcessMain - Complete process to be carried out using the filtered data." DisplayName="Main" sap:VirtualizedContainerService.HintSize="418,1143" sap2010:WorkflowViewState.IdRef="Sequence_1">
+        <Sequence sap2010:Annotation.AnnotationText="Main Consists of : &#xA;&#xA;1.InitializationMain - Initializes all pre required components.&#xA;2.ExtraDataFromWorkItem - Fetches all the data to be               processed with.&#xA;3.FilterExtratedDataTable - Filters only the required data.&#xA;4. ProcessMain - Complete process to be carried out using the filtered data." DisplayName="Main" sap:VirtualizedContainerService.HintSize="418,977" sap2010:WorkflowViewState.IdRef="Sequence_1">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -111,7 +119,7 @@
               <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke InitializationMain workflow" sap:VirtualizedContainerService.HintSize="376,116" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Initialization\InitializationMain.xaml">
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke InitializationMain workflow" sap:VirtualizedContainerService.HintSize="376,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Initialization\InitializationMain.xaml">
             <ui:InvokeWorkflowFile.Arguments>
               <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dt_finalReportData">[dt_finalReportData]</OutArgument>
               <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="out_config">[config]</InOutArgument>
@@ -119,7 +127,7 @@
               <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_out_assetValue">[assetValue]</InOutArgument>
             </ui:InvokeWorkflowFile.Arguments>
           </ui:InvokeWorkflowFile>
-          <Sequence sap2010:Annotation.AnnotationText="Extractes the Processing Data " DisplayName="Get Data" sap:VirtualizedContainerService.HintSize="376,395" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence sap2010:Annotation.AnnotationText="Extractes the Processing Data " DisplayName="Get Data" sap:VirtualizedContainerService.HintSize="376,387" sap2010:WorkflowViewState.IdRef="Sequence_2">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -127,12 +135,12 @@
                 <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke ExtractDataFromWorkItems workflow" sap:VirtualizedContainerService.HintSize="334,116" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Process\ExtractWorkItems.xaml">
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke ExtractDataFromWorkItems workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Process\ExtractWorkItems.xaml">
               <ui:InvokeWorkflowFile.Arguments>
                 <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dt_extractedData">[dt_extractedData]</OutArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke FilterExtractedDataTable workflow" sap:VirtualizedContainerService.HintSize="334,116" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Process\FilterWorkItems.xaml">
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke FilterExtractedDataTable workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Process\FilterWorkItems.xaml">
               <ui:InvokeWorkflowFile.Arguments>
                 <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dt_extractedData">[dt_extractedData]</InArgument>
                 <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dt_filteredData">[dt_filteredData]</OutArgument>
@@ -140,8 +148,8 @@
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
           </Sequence>
-          <ui:MergeDataTable Destination="[dt_finalReportData]" DisplayName="Merge Filter datatable and Final Report Datatable" sap:VirtualizedContainerService.HintSize="376,140" sap2010:WorkflowViewState.IdRef="MergeDataTable_1" MissingSchemaAction="Add" Source="[dt_filteredData]" />
-          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke ProcessMain workflow" sap:VirtualizedContainerService.HintSize="376,116" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Process\ProcessMain.xaml">
+          <ui:MergeDataTable Destination="[dt_finalReportData]" DisplayName="Merge Filter datatable and Final Report Datatable" sap:VirtualizedContainerService.HintSize="376,22" sap2010:WorkflowViewState.IdRef="MergeDataTable_1" MissingSchemaAction="Add" Source="[dt_filteredData]" />
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke ProcessMain workflow" sap:VirtualizedContainerService.HintSize="376,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Process\ProcessMain.xaml">
             <ui:InvokeWorkflowFile.Arguments>
               <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_config">[config]</InArgument>
               <InOutArgument x:TypeArguments="sd:DataTable" x:Key="in_out_dt_finalReportData">[dt_finalReportData]</InOutArgument>
@@ -150,7 +158,7 @@
         </Sequence>
       </TryCatch.Try>
       <TryCatch.Catches>
-        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="801,25" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="422,21" sap2010:WorkflowViewState.IdRef="Catch`1_1">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">False</x:Boolean>
