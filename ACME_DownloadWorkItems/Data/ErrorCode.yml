@@ -1,0 +1,6 @@
+Settings:
+ Namespace: 'E5.Core' #The root namespace which would be used
+ReturnCodes:
+ INCORRECT_USERNAME: "1001 ## Incorrect UserName & Password while Login"
+ WRONG_URL: "1002 ## The Site Can't be reached. Please give a Valid URL"
+ ASSETS_NOT_FOUND: "1003 ## There is no Asset Found"

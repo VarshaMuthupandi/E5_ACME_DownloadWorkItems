@@ -1,15 +1,15 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="System1ExtractClientInformation" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:si="clr-namespace:System.IO;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="Downloaded PDF must be renamed with WIID" Name="in_WIID" Type="InArgument(x:String)" />
-    <x:Property Name="in_config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
     <x:Property sap2010:Annotation.AnnotationText="Set the Download Status to either &quot;Downloaded&quot; or &quot;Not Downloaded&quot;" Name="out_downloadStatus" Type="OutArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="The Client Id splited from the Client Details" Name="out_clientID" Type="OutArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="Reason for Not Downloading the process" Name="out_reason" Type="OutArgument(x:String)" />
+    <x:Property Name="in_processFolderPath" Type="InArgument(x:String)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1618,3706</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1755,3668</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>System1ExtractClientInformation_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="28">
@@ -71,10 +71,9 @@
       <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
       <AssemblyReference>UiPath.Excel</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Download the pdf.&#xD;&#xA;Case 1: Download Check Request Available.&#xD;&#xA;Case 2: Download PDF Invoice Available.&#xD;&#xA;Case 3: Only Client Details Available." DisplayName="DownloadCheckRequest" sap:VirtualizedContainerService.HintSize="1628,3641" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Download the pdf.&#xA;Case 1: Download Check Request Available.&#xA;Case 2: Download PDF Invoice Available.&#xA;Case 3: Only Client Details Available." DisplayName="DownloadCheckRequest" sap:VirtualizedContainerService.HintSize="1765,3503" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:Boolean" Name="downloadCheckButtonExists" />
       <Variable x:TypeArguments="x:Boolean" Name="downloadNotAvailable" />
@@ -89,27 +88,27 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1586,99" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started to download the PDF&quot;]" />
-    <ui:BrowserScope Browser="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" UiBrowser="{x:Null}" BrowserType="Chrome" DisplayName="ACME Work Items Page" sap:VirtualizedContainerService.HintSize="1586,3183" sap2010:WorkflowViewState.IdRef="BrowserScope_1" InformativeScreenshot="2fc8e173200687ffeb1c78dad925fc7a" Selector="&lt;html app='chrome.exe' title='ACME System 1 - Work Items' /&gt;">
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1723,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started to download the PDF&quot;]" />
+    <ui:BrowserScope Browser="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" UiBrowser="{x:Null}" BrowserType="Chrome" DisplayName="ACME Work Items Page" sap:VirtualizedContainerService.HintSize="1723,3077" sap2010:WorkflowViewState.IdRef="BrowserScope_1" InformativeScreenshot="2fc8e173200687ffeb1c78dad925fc7a" Selector="&lt;html app='chrome.exe' title='ACME System 1 - Work Items' /&gt;">
       <ui:BrowserScope.Body>
         <ActivityAction x:TypeArguments="x:Object">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="1552,3037" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="1689,2931" sap2010:WorkflowViewState.IdRef="Sequence_2">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 <x:Boolean x:Key="IsPinned">False</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:UiElementExists DisplayName="Download Check Request Exists" Exists="[downloadCheckButtonExists]" sap:VirtualizedContainerService.HintSize="1510,106" sap2010:WorkflowViewState.IdRef="UiElementExists_1">
+            <ui:UiElementExists DisplayName="Download Check Request Exists" Exists="[downloadCheckButtonExists]" sap:VirtualizedContainerService.HintSize="1647,106" sap2010:WorkflowViewState.IdRef="UiElementExists_1">
               <ui:UiElementExists.Target>
                 <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="8c3d950b-b094-4d03-bfc0-2cfad9632d0e" InformativeScreenshot="a898831e43c85234d5f5243a189ff447" Selector="&lt;webctrl aaname=' Download Check Request' tag='BUTTON' /&gt;" TimeoutMS="5000" WaitForReady="COMPLETE" />
               </ui:UiElementExists.Target>
             </ui:UiElementExists>
-            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1510,99" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Checks For Download Check Request Exists&quot;]" />
-            <If Condition="[downloadCheckButtonExists]" DisplayName="Check Download Check Request Exists" sap:VirtualizedContainerService.HintSize="1510,2660" sap2010:WorkflowViewState.IdRef="If_1">
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1647,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Checks For Download Check Request Exists&quot;]" />
+            <If Condition="[downloadCheckButtonExists]" DisplayName="Check Download Check Request Exists" sap:VirtualizedContainerService.HintSize="1647,2562" sap2010:WorkflowViewState.IdRef="If_1">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -117,15 +116,15 @@
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
               <If.Then>
-                <Sequence DisplayName="Download Check Request Exists " sap:VirtualizedContainerService.HintSize="526,1367" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                <Sequence DisplayName="Download Check Request Exists " sap:VirtualizedContainerService.HintSize="663,1291" sap2010:WorkflowViewState.IdRef="Sequence_3">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       <x:Boolean x:Key="IsPinned">False</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="484,99" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Download Check Request Available&quot;]" />
-                  <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click- Download Check Request" sap:VirtualizedContainerService.HintSize="484,106" sap2010:WorkflowViewState.IdRef="Click_1" KeyModifiers="None" MouseButton="BTN_LEFT">
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="621,91" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Download Check Request Available&quot;]" />
+                  <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click- Download Check Request" sap:VirtualizedContainerService.HintSize="621,106" sap2010:WorkflowViewState.IdRef="Click_1" KeyModifiers="None" MouseButton="BTN_LEFT">
                     <ui:Click.CursorPosition>
                       <ui:CursorPosition Position="Center">
                         <ui:CursorPosition.OffsetX>
@@ -144,7 +143,7 @@
                       </ui:Target>
                     </ui:Click.Target>
                   </ui:Click>
-                  <ui:UiElementExists DisplayName="Download 404 Exists" Exists="[downloadNotAvailable]" sap:VirtualizedContainerService.HintSize="484,106" sap2010:WorkflowViewState.IdRef="UiElementExists_2">
+                  <ui:UiElementExists DisplayName="Download 404 Exists" Exists="[downloadNotAvailable]" sap:VirtualizedContainerService.HintSize="621,106" sap2010:WorkflowViewState.IdRef="UiElementExists_2">
                     <ui:UiElementExists.Target>
                       <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="61d6600c-811d-4c96-97d9-57728b54365e" InformativeScreenshot="56b3917fde59d4bde6973d0392c1d558" Selector="&lt;webctrl tag='DIV' /&gt;" WaitForReady="COMPLETE">
                         <ui:Target.TimeoutMS>
@@ -153,15 +152,15 @@
                       </ui:Target>
                     </ui:UiElementExists.Target>
                   </ui:UiElementExists>
-                  <If Condition="[downloadNotAvailable]" DisplayName="If 404 Occures" sap:VirtualizedContainerService.HintSize="484,844" sap2010:WorkflowViewState.IdRef="If_2">
+                  <If Condition="[downloadNotAvailable]" DisplayName="If 404 Occures" sap:VirtualizedContainerService.HintSize="621,776" sap2010:WorkflowViewState.IdRef="If_2">
                     <If.Then>
-                      <Sequence DisplayName="Update " sap:VirtualizedContainerService.HintSize="376,646" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                      <Sequence DisplayName="Update " sap:VirtualizedContainerService.HintSize="376,629" sap2010:WorkflowViewState.IdRef="Sequence_5">
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
-                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,99" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;404 Download PDF Not Available&quot;]" />
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;404 Download PDF Not Available&quot;]" />
                         <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DelayMS="1000" DisplayName="Click -Back " sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_2" KeyModifiers="None" MouseButton="BTN_LEFT">
                           <ui:Click.CursorPosition>
                             <ui:CursorPosition Position="Center">
@@ -181,7 +180,7 @@
                             </ui:Target>
                           </ui:Click.Target>
                         </ui:Click>
-                        <Assign DisplayName="Assign- Download Status" sap:VirtualizedContainerService.HintSize="334,63" sap2010:WorkflowViewState.IdRef="Assign_5">
+                        <Assign DisplayName="Assign- Download Status" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_5">
                           <Assign.To>
                             <OutArgument x:TypeArguments="x:String">[out_downloadStatus]</OutArgument>
                           </Assign.To>
@@ -189,7 +188,7 @@
                             <InArgument x:TypeArguments="x:String">Not Downloaded</InArgument>
                           </Assign.Value>
                         </Assign>
-                        <Assign DisplayName="Assign- Reason" sap:VirtualizedContainerService.HintSize="334,63" sap2010:WorkflowViewState.IdRef="Assign_10">
+                        <Assign DisplayName="Assign- Reason" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_10">
                           <Assign.To>
                             <OutArgument x:TypeArguments="x:String">[out_reason]</OutArgument>
                           </Assign.To>
@@ -197,7 +196,7 @@
                             <InArgument x:TypeArguments="x:String">["Download Not Found"]</InArgument>
                           </Assign.Value>
                         </Assign>
-                        <Assign DisplayName="Assign- Client Id" sap:VirtualizedContainerService.HintSize="334,63" sap2010:WorkflowViewState.IdRef="Assign_12">
+                        <Assign DisplayName="Assign- Client Id" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_12">
                           <Assign.To>
                             <OutArgument x:TypeArguments="x:String">[out_clientID]</OutArgument>
                           </Assign.To>
@@ -208,7 +207,7 @@
                       </Sequence>
                     </If.Then>
                     <If.Else>
-                      <Sequence sap2010:WorkflowViewState.IdRef="Sequence_6">
+                      <Sequence sap:VirtualizedContainerService.HintSize="200,83" sap2010:WorkflowViewState.IdRef="Sequence_6">
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -220,7 +219,7 @@
                 </Sequence>
               </If.Then>
               <If.Else>
-                <Sequence sap:VirtualizedContainerService.HintSize="939,2495" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                <Sequence sap:VirtualizedContainerService.HintSize="939,2415" sap2010:WorkflowViewState.IdRef="Sequence_4">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -232,10 +231,10 @@
                       <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="b99407cb-0677-4035-a41f-e7bfedb733b0" InformativeScreenshot="6f1c8cb2af448d630e67b1332b23f551" Selector="&lt;webctrl aaname=' Download PDF Invoice' tag='BUTTON' /&gt;" TimeoutMS="5000" WaitForReady="COMPLETE" />
                     </ui:UiElementExists.Target>
                   </ui:UiElementExists>
-                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="897,99" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Checks For Download PDF Invoice Exists&quot;]" />
-                  <If Condition="[downloadPDFButtonExists]" DisplayName="Check Download PDF Invoice Exists" sap:VirtualizedContainerService.HintSize="897,2118" sap2010:WorkflowViewState.IdRef="If_3">
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="897,91" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Checks For Download PDF Invoice Exists&quot;]" />
+                  <If Condition="[downloadPDFButtonExists]" DisplayName="Check Download PDF Invoice Exists" sap:VirtualizedContainerService.HintSize="897,2046" sap2010:WorkflowViewState.IdRef="If_3">
                     <If.Then>
-                      <Sequence DisplayName="Download PDF Invoice Exists" sap:VirtualizedContainerService.HintSize="476,1953" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                      <Sequence DisplayName="Download PDF Invoice Exists" sap:VirtualizedContainerService.HintSize="476,1899" sap2010:WorkflowViewState.IdRef="Sequence_7">
                         <Sequence.Variables>
                           <Variable x:TypeArguments="si:FileInfo" Name="downloadedFile" />
                         </Sequence.Variables>
@@ -244,7 +243,7 @@
                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
-                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,99" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;Download PDF Invoice Available&quot;]" />
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;Download PDF Invoice Available&quot;]" />
                         <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click- Download PDF " sap:VirtualizedContainerService.HintSize="434,106" sap2010:WorkflowViewState.IdRef="Click_4" KeyModifiers="None" MouseButton="BTN_LEFT">
                           <ui:Click.CursorPosition>
                             <ui:CursorPosition Position="Center">
@@ -264,7 +263,7 @@
                             </ui:Target>
                           </ui:Click.Target>
                         </ui:Click>
-                        <ui:GetLastDownloadedFile Timeout="{x:Null}" DisplayName="Wait for Download" DownloadFolder="[windowsDownloadLocation]" File="[downloadedFile]" sap:VirtualizedContainerService.HintSize="434,737" sap2010:WorkflowViewState.IdRef="GetLastDownloadedFile_2">
+                        <ui:GetLastDownloadedFile Timeout="{x:Null}" DisplayName="Wait for Download" DownloadFolder="[windowsDownloadLocation]" File="[downloadedFile]" sap:VirtualizedContainerService.HintSize="434,725" sap2010:WorkflowViewState.IdRef="GetLastDownloadedFile_2">
                           <ui:GetLastDownloadedFile.Body>
                             <ActivityAction>
                               <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,518" sap2010:WorkflowViewState.IdRef="Sequence_12">
@@ -324,7 +323,7 @@
                             </ActivityAction>
                           </ui:GetLastDownloadedFile.Body>
                         </ui:GetLastDownloadedFile>
-                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,99" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;Downloaded PDF Successfully&quot;]" />
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;Downloaded PDF Successfully&quot;]" />
                         <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DelayMS="1000" DisplayName="Click - Back" sap:VirtualizedContainerService.HintSize="434,106" sap2010:WorkflowViewState.IdRef="Click_7" KeyModifiers="None" MouseButton="BTN_LEFT">
                           <ui:Click.CursorPosition>
                             <ui:CursorPosition Position="Center">
@@ -344,9 +343,9 @@
                             </ui:Target>
                           </ui:Click.Target>
                         </ui:Click>
-                        <ui:MoveFile ContinueOnError="{x:Null}" Destination="[in_config(&quot;processFolderPath&quot;)]" DisplayName="Move pdf to Process Folder" sap:VirtualizedContainerService.HintSize="434,169" sap2010:WorkflowViewState.IdRef="MoveFile_1" Overwrite="True" Path="[windowsDownloadLocation+&quot;\&quot;+in_WIID+&quot;.pdf&quot;]" />
-                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,99" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[&quot;Moved the Downloaded PDF into the Process folder&quot;]" />
-                        <Assign DisplayName="Assign- Download Status" sap:VirtualizedContainerService.HintSize="434,63" sap2010:WorkflowViewState.IdRef="Assign_8">
+                        <ui:MoveFile ContinueOnError="{x:Null}" Destination="[in_processFolderPath]" DisplayName="Move pdf to Process Folder" sap:VirtualizedContainerService.HintSize="434,157" sap2010:WorkflowViewState.IdRef="MoveFile_1" Overwrite="True" Path="[windowsDownloadLocation+&quot;\&quot;+in_WIID+&quot;.pdf&quot;]" />
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[&quot;Moved the Downloaded PDF into the Process folder&quot;]" />
+                        <Assign DisplayName="Assign- Download Status" sap:VirtualizedContainerService.HintSize="434,60" sap2010:WorkflowViewState.IdRef="Assign_8">
                           <Assign.To>
                             <OutArgument x:TypeArguments="x:String">[out_downloadStatus]</OutArgument>
                           </Assign.To>
@@ -354,7 +353,7 @@
                             <InArgument x:TypeArguments="x:String">Downloaded</InArgument>
                           </Assign.Value>
                         </Assign>
-                        <Assign DisplayName="Assign- Reason" sap:VirtualizedContainerService.HintSize="434,63" sap2010:WorkflowViewState.IdRef="Assign_13">
+                        <Assign DisplayName="Assign- Reason" sap:VirtualizedContainerService.HintSize="434,60" sap2010:WorkflowViewState.IdRef="Assign_13">
                           <Assign.To>
                             <OutArgument x:TypeArguments="x:String">[out_reason]</OutArgument>
                           </Assign.To>
@@ -365,7 +364,7 @@
                       </Sequence>
                     </If.Then>
                     <If.Else>
-                      <Sequence DisplayName="Client Details Exsits" sap:VirtualizedContainerService.HintSize="376,836" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                      <Sequence DisplayName="Client Details Exsits" sap:VirtualizedContainerService.HintSize="376,811" sap2010:WorkflowViewState.IdRef="Sequence_8">
                         <Sequence.Variables>
                           <Variable x:TypeArguments="x:String" Name="leftDetails" />
                           <Variable x:TypeArguments="x:String" Name="rightDetails" />
@@ -375,7 +374,7 @@
                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
-                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,99" sap2010:WorkflowViewState.IdRef="LogMessage_10" Level="Info" Message="[&quot;Only Client Details Available&quot;]" />
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_10" Level="Info" Message="[&quot;Only Client Details Available&quot;]" />
                         <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Client Details" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="GetValue_5">
                           <ui:GetValue.Target>
                             <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="0020abc4-90db-46e3-b933-636579181df6" InformativeScreenshot="5a7400d228e3cd38e5ad0f35c197328d" Selector="&lt;webctrl tag='P' /&gt;" WaitForReady="COMPLETE">
@@ -388,7 +387,7 @@
                             <OutArgument x:TypeArguments="x:String">[clientDetails]</OutArgument>
                           </ui:GetValue.Value>
                         </ui:GetValue>
-                        <ui:TextToLeftRight CustomSeparatorEnabled="False" DisplayName="Text to Left/Right" FullText="[clientDetails]" sap:VirtualizedContainerService.HintSize="334,55" sap2010:WorkflowViewState.IdRef="TextToLeftRight_1" Separator="&#xA;" SeparatorKey="NewLine" TextToLeft="[leftDetails]" TextToRight="[rightDetails]">
+                        <ui:TextToLeftRight CustomSeparatorEnabled="False" DisplayName="Text to Left/Right" FullText="[clientDetails]" sap:VirtualizedContainerService.HintSize="334,51" sap2010:WorkflowViewState.IdRef="TextToLeftRight_1" Separator="&#xA;" SeparatorKey="NewLine" TextToLeft="[leftDetails]" TextToRight="[rightDetails]">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -396,7 +395,7 @@
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
                         </ui:TextToLeftRight>
-                        <ui:TextToLeftRight CustomSeparatorEnabled="False" DisplayName="Text to Left/Right" FullText="[rightDetails]" sap:VirtualizedContainerService.HintSize="334,55" sap2010:WorkflowViewState.IdRef="TextToLeftRight_2" Separator="&#xA;" SeparatorKey="NewLine" TextToLeft="[leftDetails]" TextToRight="[rightDetails]">
+                        <ui:TextToLeftRight CustomSeparatorEnabled="False" DisplayName="Text to Left/Right" FullText="[rightDetails]" sap:VirtualizedContainerService.HintSize="334,51" sap2010:WorkflowViewState.IdRef="TextToLeftRight_2" Separator="&#xA;" SeparatorKey="NewLine" TextToLeft="[leftDetails]" TextToRight="[rightDetails]">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -404,7 +403,7 @@
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
                         </ui:TextToLeftRight>
-                        <Assign DisplayName="Assign- Client ID" sap:VirtualizedContainerService.HintSize="334,63" sap2010:WorkflowViewState.IdRef="Assign_7">
+                        <Assign DisplayName="Assign- Client ID" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_7">
                           <Assign.To>
                             <OutArgument x:TypeArguments="x:String">[out_clientID]</OutArgument>
                           </Assign.To>
@@ -412,7 +411,7 @@
                             <InArgument x:TypeArguments="x:String">[split(leftDetails,":")(1)]</InArgument>
                           </Assign.Value>
                         </Assign>
-                        <Assign DisplayName="Assign- Download Status" sap:VirtualizedContainerService.HintSize="334,63" sap2010:WorkflowViewState.IdRef="Assign_9">
+                        <Assign DisplayName="Assign- Download Status" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_9">
                           <Assign.To>
                             <OutArgument x:TypeArguments="x:String">[out_downloadStatus]</OutArgument>
                           </Assign.To>
@@ -420,7 +419,7 @@
                             <InArgument x:TypeArguments="x:String">Not Downloaded</InArgument>
                           </Assign.Value>
                         </Assign>
-                        <Assign DisplayName="Assign- Reason" sap:VirtualizedContainerService.HintSize="334,63" sap2010:WorkflowViewState.IdRef="Assign_11">
+                        <Assign DisplayName="Assign- Reason" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_11">
                           <Assign.To>
                             <OutArgument x:TypeArguments="x:String">[out_reason]</OutArgument>
                           </Assign.To>
@@ -444,6 +443,6 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:BrowserScope>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1586,99" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Completed Download and retrived the status&quot;]" />
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1723,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Completed Download and retrived the status&quot;]" />
   </Sequence>
 </Activity>

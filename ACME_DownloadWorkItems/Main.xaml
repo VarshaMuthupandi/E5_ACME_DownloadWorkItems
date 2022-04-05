@@ -1,6 +1,6 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1144,1361" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1169,1906" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="74">
+    <scg:List x:TypeArguments="x:String" Capacity="43">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -47,7 +47,7 @@
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="56">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="30">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -80,7 +80,7 @@
       <AssemblyReference>YamlDotNet</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="MAIN" sap:VirtualizedContainerService.HintSize="498,1296" sap2010:WorkflowViewState.IdRef="Sequence_6">
+  <Sequence DisplayName="MAIN" sap:VirtualizedContainerService.HintSize="498,1701" sap2010:WorkflowViewState.IdRef="Sequence_6">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="dt_extractedData" />
       <Variable x:TypeArguments="sd:DataTable" Name="dt_finalReportData" />
@@ -90,20 +90,22 @@
       <Variable x:TypeArguments="x:String" Name="emailSubject" />
       <Variable x:TypeArguments="x:String" Name="emailBody" />
       <Variable x:TypeArguments="x:String" Name="errorInfo" />
-      <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Default="[new Dictionary(of String,string)]" Name="config" />
       <Variable x:TypeArguments="x:String" Name="emailAttachment">
         <Variable.Default>
           <Literal x:TypeArguments="x:String" Value="" />
         </Variable.Default>
       </Variable>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Default="[new Dictionary(of String,string)]" Name="assetValue" />
+      <Variable x:TypeArguments="njl:JObject" Name="flowConfig" />
+      <Variable x:TypeArguments="scg:List(x:String)" Name="summaryFieldName" />
+      <Variable x:TypeArguments="x:String" Name="processFolderPath" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="456,1204" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="456,1609" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -111,7 +113,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <TryCatch.Try>
-        <Sequence sap2010:Annotation.AnnotationText="Main Consists of : &#xA;&#xA;1.InitializationMain - Initializes all pre required components.&#xA;2.ExtraDataFromWorkItem - Fetches all the data to be               processed with.&#xA;3.FilterExtratedDataTable - Filters only the required data.&#xA;4. ProcessMain - Complete process to be carried out using the filtered data." DisplayName="Main" sap:VirtualizedContainerService.HintSize="418,977" sap2010:WorkflowViewState.IdRef="Sequence_1">
+        <Sequence sap2010:Annotation.AnnotationText="Main Consists of : &#xA;&#xA;1.InitializationMain - Initializes all pre required components.&#xA;2.ExtraDataFromWorkItem - Fetches all the data to be               processed with.&#xA;3.FilterExtratedDataTable - Filters only the required data.&#xA;4. ProcessMain - Complete process to be carried out using the filtered data." DisplayName="Main" sap:VirtualizedContainerService.HintSize="418,1382" sap2010:WorkflowViewState.IdRef="Sequence_1">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -119,12 +121,34 @@
               <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke BeginTaskWorkFlow workflow" sap:VirtualizedContainerService.HintSize="376,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_17" UnSafe="False" WorkflowFileName="BeginTaskWorkFlow.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <OutArgument x:TypeArguments="njl:JObject" x:Key="out_flowConfig">
+                <mva:VisualBasicReference x:TypeArguments="njl:JObject" ExpressionText="flowConfig" />
+              </OutArgument>
+              <OutArgument x:TypeArguments="scg:List(x:String)" x:Key="out_summaryFieldName">
+                <mva:VisualBasicReference x:TypeArguments="scg:List(x:String)" ExpressionText="summaryFieldName" />
+              </OutArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+          <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="376,61" sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="[flowConfig(&quot;acmeURL&quot;).ToString]" />
           <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke InitializationMain workflow" sap:VirtualizedContainerService.HintSize="376,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Initialization\InitializationMain.xaml">
             <ui:InvokeWorkflowFile.Arguments>
-              <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dt_finalReportData">[dt_finalReportData]</OutArgument>
-              <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="out_config">[config]</InOutArgument>
-              <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="out_errorCode">[errorCode]</OutArgument>
-              <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_out_assetValue">[assetValue]</InOutArgument>
+              <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dt_finalReportData">
+                <mva:VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="dt_finalReportData" />
+              </OutArgument>
+              <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="out_errorCode">
+                <mva:VisualBasicReference x:TypeArguments="scg:Dictionary(x:String, x:String)" ExpressionText="errorCode" />
+              </OutArgument>
+              <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_out_assetValue">
+                <mva:VisualBasicReference x:TypeArguments="scg:Dictionary(x:String, x:String)" ExpressionText="assetValue" />
+              </InOutArgument>
+              <InArgument x:TypeArguments="njl:JObject" x:Key="in_flowConfig">
+                <mva:VisualBasicValue x:TypeArguments="njl:JObject" ExpressionText="flowConfig" />
+              </InArgument>
+              <OutArgument x:TypeArguments="x:String" x:Key="out_processFolderPath">
+                <mva:VisualBasicReference x:TypeArguments="x:String" ExpressionText="processFolderPath" />
+              </OutArgument>
             </ui:InvokeWorkflowFile.Arguments>
           </ui:InvokeWorkflowFile>
           <Sequence sap2010:Annotation.AnnotationText="Extractes the Processing Data " DisplayName="Get Data" sap:VirtualizedContainerService.HintSize="376,387" sap2010:WorkflowViewState.IdRef="Sequence_2">
@@ -142,17 +166,40 @@
             </ui:InvokeWorkflowFile>
             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke FilterExtractedDataTable workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Process\FilterWorkItems.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dt_extractedData">[dt_extractedData]</InArgument>
-                <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dt_filteredData">[dt_filteredData]</OutArgument>
-                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_config">[config]</InArgument>
+                <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dt_extractedData">
+                  <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="dt_extractedData" />
+                </InArgument>
+                <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dt_filteredData">
+                  <mva:VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="dt_filteredData" />
+                </OutArgument>
+                <InArgument x:TypeArguments="njl:JObject" x:Key="in_flowConfig">
+                  <mva:VisualBasicValue x:TypeArguments="njl:JObject" ExpressionText="flowConfig" />
+                </InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
           </Sequence>
           <ui:MergeDataTable Destination="[dt_finalReportData]" DisplayName="Merge Filter datatable and Final Report Datatable" sap:VirtualizedContainerService.HintSize="376,22" sap2010:WorkflowViewState.IdRef="MergeDataTable_1" MissingSchemaAction="Add" Source="[dt_filteredData]" />
           <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke ProcessMain workflow" sap:VirtualizedContainerService.HintSize="376,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Process\ProcessMain.xaml">
             <ui:InvokeWorkflowFile.Arguments>
-              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_config">[config]</InArgument>
-              <InOutArgument x:TypeArguments="sd:DataTable" x:Key="in_out_dt_finalReportData">[dt_finalReportData]</InOutArgument>
+              <InOutArgument x:TypeArguments="sd:DataTable" x:Key="in_out_dt_finalReportData">
+                <mva:VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="dt_finalReportData" />
+              </InOutArgument>
+              <InArgument x:TypeArguments="njl:JObject" x:Key="in_flowConfig">
+                <mva:VisualBasicValue x:TypeArguments="njl:JObject" ExpressionText="flowConfig" />
+              </InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_processFolderPath">
+                <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="processFolderPath" />
+              </InArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke EndTaskWorkFlow workflow" sap:VirtualizedContainerService.HintSize="376,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_19" UnSafe="False" WorkflowFileName="EndTaskWorkFlow.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dt_finalReportData">
+                <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="dt_finalReportData" />
+              </InArgument>
+              <InArgument x:TypeArguments="scg:List(x:String)" x:Key="in_summaryFieldName">
+                <mva:VisualBasicValue x:TypeArguments="scg:List(x:String)" ExpressionText="summaryFieldName" />
+              </InArgument>
             </ui:InvokeWorkflowFile.Arguments>
           </ui:InvokeWorkflowFile>
         </Sequence>
@@ -169,13 +216,13 @@
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
             </ActivityAction.Argument>
-            <Sequence sap:VirtualizedContainerService.HintSize="376,397" sap2010:WorkflowViewState.IdRef="Sequence_7">
+            <Sequence sap:VirtualizedContainerService.HintSize="376,389" sap2010:WorkflowViewState.IdRef="Sequence_7">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,99" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Catch Block is Being Executed&quot;]" />
+              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Catch Block is Being Executed&quot;]" />
               <Assign sap:VirtualizedContainerService.HintSize="334,63" sap2010:WorkflowViewState.IdRef="Assign_1">
                 <Assign.To>
                   <OutArgument x:TypeArguments="x:Boolean">[errorOccured]</OutArgument>
@@ -197,7 +244,7 @@
         </Catch>
       </TryCatch.Catches>
       <TryCatch.Finally>
-        <If Condition="[errorOccured]" sap:VirtualizedContainerService.HintSize="797,614" sap2010:WorkflowViewState.IdRef="If_1">
+        <If Condition="[errorOccured]" sap:VirtualizedContainerService.HintSize="797,997" sap2010:WorkflowViewState.IdRef="If_1">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -205,14 +252,15 @@
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
           <If.Then>
-            <Sequence sap2010:Annotation.AnnotationText="This block is executed if error occurs." DisplayName="Error Mail" sap:VirtualizedContainerService.HintSize="376,445" sap2010:WorkflowViewState.IdRef="Sequence_8">
+            <Sequence sap2010:Annotation.AnnotationText="This block is executed if error occurs." DisplayName="Error Mail" sap:VirtualizedContainerService.HintSize="376,849" sap2010:WorkflowViewState.IdRef="Sequence_8">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <Assign DisplayName="Assign- Subject" sap:VirtualizedContainerService.HintSize="334,63" sap2010:WorkflowViewState.IdRef="Assign_2">
+              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Started to Send Error Mail&quot;]" />
+              <Assign DisplayName="Assign- Subject" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_2">
                 <Assign.To>
                   <OutArgument x:TypeArguments="x:String">[emailSubject]</OutArgument>
                 </Assign.To>
@@ -220,7 +268,7 @@
                   <InArgument x:TypeArguments="x:String">Encountered Error</InArgument>
                 </Assign.Value>
               </Assign>
-              <Assign DisplayName="Assign- Body" sap:VirtualizedContainerService.HintSize="334,63" sap2010:WorkflowViewState.IdRef="Assign_3">
+              <Assign DisplayName="Assign- Body" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_3">
                 <Assign.To>
                   <OutArgument x:TypeArguments="x:String">[emailBody]</OutArgument>
                 </Assign.To>
@@ -228,38 +276,80 @@
                   <InArgument x:TypeArguments="x:String">["The error message : "+errorInfo]</InArgument>
                 </Assign.Value>
               </Assign>
-              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke SMTPMail workflow" sap:VirtualizedContainerService.HintSize="334,116" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_14" UnSafe="False" WorkflowFileName="Mail\SMTPMail.xaml">
+              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke SMTPMail workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_14" UnSafe="False" WorkflowFileName="Mail\SMTPMail.xaml">
                 <ui:InvokeWorkflowFile.Arguments>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_subject">[emailSubject]</InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_body">[emailBody]</InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_attachment">[emailAttachment]</InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_receiverEmail">[config("receiverEmail")]</InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_senderEmail">[assetValue("smtpSenderEmail")]</InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_password">[assetValue("smtpSenderPassword")]</InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_smtpPort">[assetValue("smtpPort")]</InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_smtpServer">[assetValue("smtpServer")]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_subject">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="emailSubject" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_body">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="emailBody" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_attachment">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="emailAttachment" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_receiverEmail">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="flowConfig(&quot;receiverEmail&quot;).toString" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_senderEmail">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="assetValue(&quot;smtpSenderEmail&quot;)" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_password">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="assetValue(&quot;smtpSenderPassword&quot;)" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_smtpPort">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="assetValue(&quot;smtpPort&quot;)" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_smtpServer">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="assetValue(&quot;smtpServer&quot;)" />
+                  </InArgument>
                 </ui:InvokeWorkflowFile.Arguments>
               </ui:InvokeWorkflowFile>
+              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LogoutACMEApplication workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_20" UnSafe="False" WorkflowFileName="Process\LogoutACMEApplication.xaml">
+                <ui:InvokeWorkflowFile.Arguments>
+                  <scg:Dictionary x:TypeArguments="x:String, Argument" />
+                </ui:InvokeWorkflowFile.Arguments>
+              </ui:InvokeWorkflowFile>
+              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Error Mail Sent&quot;]" />
             </Sequence>
           </If.Then>
           <If.Else>
-            <Sequence sap2010:Annotation.AnnotationText="This block is executed if process has completed successfully." DisplayName="Success Mail" sap:VirtualizedContainerService.HintSize="376,414" sap2010:WorkflowViewState.IdRef="Sequence_15">
+            <Sequence sap2010:Annotation.AnnotationText="This block is executed if process has completed successfully." DisplayName="Success Mail" sap:VirtualizedContainerService.HintSize="376,387" sap2010:WorkflowViewState.IdRef="Sequence_15">
+              <Sequence.Variables>
+                <Variable x:TypeArguments="x:String" Name="compressedFolderPath" />
+              </Sequence.Variables>
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke SendFinalReport workflow" sap:VirtualizedContainerService.HintSize="334,116" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_15" UnSafe="False" WorkflowFileName="Process\SendFinalReport.xaml">
+              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke SendFinalReport workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_15" UnSafe="False" WorkflowFileName="Process\SendFinalReport.xaml">
                 <ui:InvokeWorkflowFile.Arguments>
-                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_config">[config]</InArgument>
-                  <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dt_finalReportData">[dt_finalReportData]</InArgument>
-                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_assetValue">[assetValue]</InArgument>
+                  <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dt_finalReportData">
+                    <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="dt_finalReportData" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_assetValue">
+                    <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:String)" ExpressionText="assetValue" />
+                  </InArgument>
+                  <OutArgument x:TypeArguments="x:String" x:Key="out_compressedFolderPath">
+                    <mva:VisualBasicReference x:TypeArguments="x:String" ExpressionText="compressedFolderPath" />
+                  </OutArgument>
+                  <InArgument x:TypeArguments="njl:JObject" x:Key="in_flowConfig">
+                    <mva:VisualBasicValue x:TypeArguments="njl:JObject" ExpressionText="flowConfig" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_processFolderPath">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="processFolderPath" />
+                  </InArgument>
                 </ui:InvokeWorkflowFile.Arguments>
               </ui:InvokeWorkflowFile>
-              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke ClearMain workflow" sap:VirtualizedContainerService.HintSize="334,116" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_16" UnSafe="False" WorkflowFileName="ClearProcess\ClearMain.xaml">
+              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke ClearMain workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_16" UnSafe="False" WorkflowFileName="ClearProcess\ClearMain.xaml">
                 <ui:InvokeWorkflowFile.Arguments>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_processedFolerPath">[config("processFolderPath")]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_processedFolerPath">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="processFolderPath" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_compressedFolderPath">
+                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="compressedFolderPath" />
+                  </InArgument>
                 </ui:InvokeWorkflowFile.Arguments>
               </ui:InvokeWorkflowFile>
             </Sequence>

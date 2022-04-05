@@ -1,13 +1,15 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="SendFinalReport" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:si="clr-namespace:System.IO;assembly=mscorlib" xmlns:uascw="clr-namespace:UiPath.Activities.System.Compression.Workflow;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:umab="clr-namespace:UiPath.Mail.Activities.Business;assembly=UiPath.Mail.Activities" xmlns:umabh="clr-namespace:UiPath.Mail.Activities.Business.HtmlEditor;assembly=UiPath.Mail.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="SendFinalReport" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:si="clr-namespace:System.IO;assembly=mscorlib" xmlns:uascw="clr-namespace:UiPath.Activities.System.Compression.Workflow;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:umab="clr-namespace:UiPath.Mail.Activities.Business;assembly=UiPath.Mail.Activities" xmlns:umabh="clr-namespace:UiPath.Mail.Activities.Business.HtmlEditor;assembly=UiPath.Mail.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
     <x:Property Name="in_dt_finalReportData" Type="InArgument(sd:DataTable)" />
     <x:Property Name="in_assetValue" Type="InArgument(scg:Dictionary(x:String, x:String))" />
+    <x:Property Name="out_compressedFolderPath" Type="OutArgument(x:String)" />
+    <x:Property Name="in_flowConfig" Type="InArgument(njl:JObject)" />
+    <x:Property Name="in_processFolderPath" Type="InArgument(x:String)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1157,1508</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1125,2342</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>SendFinalReport_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="68">
@@ -45,10 +47,12 @@
       <x:String>System.Collections.ObjectModel</x:String>
       <x:String>System.Runtime.InteropServices</x:String>
       <x:String>System.Reflection</x:String>
+      <x:String>Newtonsoft.Json.Linq</x:String>
+      <x:String>Newtonsoft.Json</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="31">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="62">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -80,9 +84,11 @@
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>UiPath.Excel</AssemblyReference>
       <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
+      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Final Process.&#xA;1. Compress the Process Folder and attach in mail.&#xA;2. Create HTML Content for the Final Report DataTable.&#xA;3. Mail the Content." DisplayName="SendFinalReport" sap:VirtualizedContainerService.HintSize="486,1443" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Final Process.&#xA;1. Compress the Process Folder and attach in mail.&#xA;2. Create HTML Content for the Final Report DataTable.&#xA;3. Mail the Content." DisplayName="SendFinalReport" sap:VirtualizedContainerService.HintSize="835,2177" sap2010:WorkflowViewState.IdRef="Sequence_3">
     <Sequence.Variables>
       <Variable x:TypeArguments="si:FileInfo" Name="compressedFolder" />
       <Variable x:TypeArguments="x:String" Name="finalReport" />
@@ -90,7 +96,11 @@
       <Variable x:TypeArguments="x:String" Name="htmlDataTable" />
       <Variable x:TypeArguments="x:String" Name="emailSubject" />
       <Variable x:TypeArguments="x:String" Name="emailBody" />
-      <Variable x:TypeArguments="x:String" Name="emailAttachment" />
+      <Variable x:TypeArguments="x:String" Name="emailAttachment">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String" Value="" />
+        </Variable.Default>
+      </Variable>
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -98,16 +108,9 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <uascw:CompressFiles Password="{x:Null}" CodePage="Default" CompressedFileInfo="[compressedFolder]" CompressedFileName="DownloadedWorkItemsPDFFolder" CompressionLevel="Normal" DisplayName="Compress Process Folder" sap:VirtualizedContainerService.HintSize="444,225" sap2010:WorkflowViewState.IdRef="CompressFiles_1" OverrideExistingFile="True">
-      <uascw:CompressFiles.ContentToArchive>
-        <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
-          <InArgument x:TypeArguments="x:String">[in_config("processFolderPath")]</InArgument>
-        </scg:List>
-      </uascw:CompressFiles.ContentToArchive>
-    </uascw:CompressFiles>
-    <ui:OutputDataTable DataTable="[in_dt_finalReportData]" DisplayName="Output Final Report Data Table" sap:VirtualizedContainerService.HintSize="444,83" sap2010:WorkflowViewState.IdRef="OutputDataTable_1" Text="[finalReport]" />
-    <ui:GenerateDataTable ColumnSizes="{x:Null}" NewLineSeparator="{x:Null}" Positions="{x:Null}" CSVParsing="True" ColumnSeparators="," DataTable="[dt_final]" DisplayName="Generate Data Table" sap:VirtualizedContainerService.HintSize="444,208" sap2010:WorkflowViewState.IdRef="GenerateDataTable_1" Input="[finalReport]" />
-    <umab:CreateHtmlContent DisplayName="Create HTML Content for Final Report" sap:VirtualizedContainerService.HintSize="444,162" HtmlContent="[htmlDataTable]" sap2010:WorkflowViewState.IdRef="CreateHtmlContent_1">
+    <ui:OutputDataTable DataTable="[in_dt_finalReportData]" DisplayName="Output Final Report Data Table" sap:VirtualizedContainerService.HintSize="793,22" sap2010:WorkflowViewState.IdRef="OutputDataTable_2" Text="[finalReport]" />
+    <ui:GenerateDataTable ColumnSizes="{x:Null}" NewLineSeparator="{x:Null}" Positions="{x:Null}" CSVParsing="True" ColumnSeparators="," DataTable="[dt_final]" DisplayName="Generate Data Table" sap:VirtualizedContainerService.HintSize="793,200" sap2010:WorkflowViewState.IdRef="GenerateDataTable_2" Input="[finalReport]" />
+    <umab:CreateHtmlContent DisplayName="Create HTML Content for Final Report" sap:VirtualizedContainerService.HintSize="793,151" HtmlContent="[htmlDataTable]" sap2010:WorkflowViewState.IdRef="CreateHtmlContent_3">
       <umab:CreateHtmlContent.HtmlContentArg>
         <umabh:HtmlContentArgument FilePath=".data/HtmlContent0.html">
           <umabh:HtmlContentArgument.RuntimeImages>
@@ -121,7 +124,78 @@
         </umabh:HtmlContentArgument>
       </umab:CreateHtmlContent.HtmlContentArg>
     </umab:CreateHtmlContent>
-    <Assign DisplayName="Assign- Email Subject" sap:VirtualizedContainerService.HintSize="444,63" sap2010:WorkflowViewState.IdRef="Assign_1">
+    <If Condition="[Directory.GetFiles(in_processFolderPath).Count &gt; 0]" DisplayName="Check Processed Folder is Empty" sap:VirtualizedContainerService.HintSize="793,1006" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Then>
+        <Sequence DisplayName="Compress Process Folder" sap:VirtualizedContainerService.HintSize="486,858" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="444,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started To Compress Process Folder&quot;]" />
+          <uascw:CompressFiles Password="{x:Null}" CodePage="Default" CompressedFileInfo="[compressedFolder]" CompressedFileName="[in_processFolderPath+&quot;\DownloadedWorkItemsPDFFolder&quot;]" CompressionLevel="Normal" DisplayName="Compress Process Folder" sap:VirtualizedContainerService.HintSize="444,213" sap2010:WorkflowViewState.IdRef="CompressFiles_3" OverrideExistingFile="True">
+            <uascw:CompressFiles.ContentToArchive>
+              <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
+                <InArgument x:TypeArguments="x:String">[in_processFolderPath]</InArgument>
+              </scg:List>
+            </uascw:CompressFiles.ContentToArchive>
+          </uascw:CompressFiles>
+          <Assign DisplayName="Assign- Attachment" sap:VirtualizedContainerService.HintSize="444,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[emailAttachment]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[compressedFolder.FullName]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="444,51" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+            <ui:CommentOut.Body>
+              <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="304,152" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign DisplayName="Assign- Compressed Folder Path" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[out_compressedFolderPath]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[emailAttachment]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </Sequence>
+            </ui:CommentOut.Body>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:CommentOut>
+          <Assign DisplayName="Assign- Email Body" sap:VirtualizedContainerService.HintSize="444,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[emailBody]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["Hi, &lt;br&gt;The work items details has give below&lt;br&gt;&lt;br&gt;"+htmlDataTable+"&lt;br&gt;&lt;br&gt; The downloaded work item pdf files are attached below in a ziped folder."]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="444,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Compressed Process Folder&quot;]" />
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Assign DisplayName="Assign- Email Body" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_7">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:String">[emailBody]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:String">["Hi, &lt;br&gt;The work items details has give below&lt;br&gt;&lt;br&gt;"+htmlDataTable+"&lt;br&gt;&lt;br&gt;"]</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Else>
+    </If>
+    <Assign DisplayName="Assign- Email Subject" sap:VirtualizedContainerService.HintSize="793,60" sap2010:WorkflowViewState.IdRef="Assign_8">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[emailSubject]</OutArgument>
       </Assign.To>
@@ -129,33 +203,19 @@
         <InArgument x:TypeArguments="x:String">["ACME Work Item download Success"]</InArgument>
       </Assign.Value>
     </Assign>
-    <Assign DisplayName="Assign- Email Body" sap:VirtualizedContainerService.HintSize="444,63" sap2010:WorkflowViewState.IdRef="Assign_2">
-      <Assign.To>
-        <OutArgument x:TypeArguments="x:String">[emailBody]</OutArgument>
-      </Assign.To>
-      <Assign.Value>
-        <InArgument x:TypeArguments="x:String">["Hi, &lt;br&gt;The work items details has give below&lt;br&gt;&lt;br&gt;"+htmlDataTable+"&lt;br&gt;&lt;br&gt; The downloaded work item pdf files are attached below in a ziped folder."]</InArgument>
-      </Assign.Value>
-    </Assign>
-    <Assign DisplayName="Assign- Attachment" sap:VirtualizedContainerService.HintSize="444,63" sap2010:WorkflowViewState.IdRef="Assign_3">
-      <Assign.To>
-        <OutArgument x:TypeArguments="x:String">[emailAttachment]</OutArgument>
-      </Assign.To>
-      <Assign.Value>
-        <InArgument x:TypeArguments="x:String">[compressedFolder.FullName]</InArgument>
-      </Assign.Value>
-    </Assign>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Email workflow" sap:VirtualizedContainerService.HintSize="444,116" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Mail\SMTPMail.xaml">
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="793,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Started to Send Success Mail&quot;]" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Email workflow" sap:VirtualizedContainerService.HintSize="793,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Mail\SMTPMail.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="x:String" x:Key="in_subject">[emailSubject]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_body">[emailBody]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_attachment">[emailAttachment]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_receiverEmail">[in_config("receiverEmail")]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_receiverEmail">[in_flowConfig("receiverEmail").ToString]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_senderEmail">[in_assetValue("smtpSenderEmail")]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_password">[in_assetValue("smtpSenderPassword")]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_smtpPort">[in_assetValue("smtpPort")]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_smtpServer">[in_assetValue("smtpServer")]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="793,91" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Sent Success Mail&quot;]" />
   </Sequence>
 </Activity>
